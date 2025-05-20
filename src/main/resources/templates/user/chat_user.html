@@ -1,0 +1,65 @@
+templates/user/chat.html
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat</title>
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
+    <div id="content">
+      <div class="container mx-auto pt-20 p-6">
+        <h1 class="text-2xl font-bold mb-4">Messaging</h1>
+
+        <!-- Step 1: List of users -->
+        <div th:if="${receiverId != null}">
+          <h2 class="text-lg font-semibold mb-2">Conversation</h2>
+
+          <div
+            id="message-container"
+            class="border rounded p-4 h-96 overflow-y-auto bg-white dark:bg-gray-800 space-y-3 mb-4"
+          >
+            <div th:each="msg : ${messages}">
+              <div
+                th:classappend="${msg.senderId == receiverId} ? 'text-left' : 'text-right'"
+                class="text-sm"
+              >
+                <div
+                  th:text="${msg.messageText}"
+                  class="inline-block px-3 py-2 rounded bg-blue-100 text-blue-900 dark:bg-blue-800 dark:text-blue-100 max-w-xs"
+                >
+                  Message text
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message form -->
+          <!-- AJAX Message Form -->
+          <form id="message-form" class="flex gap-2">
+            <input type="hidden" id="receiver-id" th:value="${receiverId}" />
+            <input
+              type="text"
+              id="message-input"
+              required
+              placeholder="Type your message..."
+              class="flex-grow p-2 border rounded dark:bg-gray-700 dark:text-white"
+            />
+            <button
+              type="submit"
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("this is user chat page");
+    </script>
+  </body>
+</html>
